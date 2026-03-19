@@ -1,22 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { CreateHabilidadeDto } from './dto/create-habilidade.dto';
-import { UpdateHabilidadeDto } from './dto/update-habilidade.dto';
 
 @Injectable()
 export class HabilidadesService {
-  create(createHabilidadeDto: CreateHabilidadeDto) {
+  private misHabilidades = {
+    lenguajes: ['JavaScript', 'TypeScript', 'HTML', 'CSS'],
+    frameworksYBibliotecas: ['React', 'NestJS', 'React Native'],
+    basesDeDatos: ['PostgreSQL', 'MySQL'],
+    herramientas: ['Git', 'GitHub', 'VS Code', 'Figma']
+  };
+
+  create(createHabilidadeDto: any) {
     return 'This action adds a new habilidade';
   }
 
   findAll() {
-    return `This action returns all habilidades`;
+    return this.misHabilidades;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} habilidade`;
   }
 
-  update(id: number, updateHabilidadeDto: UpdateHabilidadeDto) {
+  update(id: number, updateHabilidadeDto: any) {
     return `This action updates a #${id} habilidade`;
   }
 
