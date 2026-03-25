@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const API_URL = 'http://localhost:3000';
     
-    // Llamadas simultáneas al backend
+    // Llamadas al backend (Asegúrate de que tu servidor NestJS esté corriendo)
     fetch(`${API_URL}/perfil`).then(res => res.json()).then(setPerfil);
     fetch(`${API_URL}/habilidades`).then(res => res.json()).then(setHabilidades);
     fetch(`${API_URL}/proyectos`).then(res => res.json()).then(setProyectos);
@@ -18,12 +18,12 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-stone-200 text-stone-800 font-sans selection:bg-stone-400 selection:text-stone-100">
+   <div className="min-h-screen bg-[#ded5ce] text-[#5e4b46] font-sans selection:bg-[#947d75] selection:text-white">
       <Navbar />
       
       <main className="px-8 md:px-16 py-12 max-w-6xl mx-auto">
         
-        {/* SECCIÓN HERO (Presentación) */}
+        {/* 1. SECCIÓN HERO (Presentación) */}
         <section className="mt-12 mb-32 lg:w-3/4">
           {perfil && (
             <>
@@ -40,16 +40,64 @@ function App() {
           )}
         </section>
 
-        {/* SECCIÓN PROYECTOS */}
-        <section id="proyectos" className="mb-32">
-          <h2 className="text-4xl font-bold text-stone-600 mb-12 flex items-center italic">
-            Featured Projects
-            <span className="ml-4 h-[1px] bg-stone-400 flex-grow"></span>
+        {/* 2. SECCIÓN RESUMEN (Texto de corrido con tu nombre SIN LÍNEA) */}
+        <section id="resumen" className="mb-32">
+          <h2 className="text-4xl font-bold text-stone-600 mb-8 italic">
+            {perfil?.nombre ? perfil.nombre.split(' ')[0] : 'Jade Alejandro Morales Millán'}
           </h2>
           
+          <div className="text-xl text-stone-500 leading-relaxed max-w-4xl">
+            <p>
+              Me gusta proponer soluciones innovadoras y fuera de lo convencional para resolver problemas complejos de manera efectiva. Tengo experiencia guiando equipos hacia el cumplimiento de objetivos de forma colaborativa, y me adapto rápidamente a nuevos entornos, herramientas y metodologías de trabajo dinámicas.
+            </p>
+          </div>
+        </section>
+
+        {/* 3. SECCIÓN ABOUT ME */}
+        <section id="sobre-mi" className="mb-32">
+          <h2 className="text-4xl font-bold text-stone-600 mb-12 flex items-center italic">
+            Acerca de mi
+            <span className="ml-4 h-[1px] bg-stone-400 flex-grow"></span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+            <div className="text-xl text-stone-500 leading-relaxed space-y-6">
+              <p>
+                Soy un apasionado estudiante de la <span className="text-stone-700 font-semibold">Universidad Tecnológica de Cancún</span>, 
+                con bastante
+                .
+              </p>
+              <p>
+                Me gusta aprender nuevas tecnologías y aplicarlas en proyectos prácticos.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 border-l border-stone-300 pl-8">
+              <div>
+                <h4 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em] mb-2">Ubicación</h4>
+                <p className="text-stone-700 font-medium text-lg">Puerto Morelos, Quintana Roo, México</p>
+              </div>
+              <div>
+                <h4 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em] mb-2">Cargo Actual</h4>
+                <p className="text-stone-700 font-medium text-lg">Estudiante de TSU</p>
+              </div>
+              <div>
+                <h4 className="text-[10px] font-black text-stone-400 uppercase tracking-[0.2em] mb-2">Intereses</h4>
+                <p className="text-stone-700 font-medium text-lg">Desarrollo de software, Piano y música clásica</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. SECCIÓN PROYECTOS */}
+        <section id="proyectos" className="mb-32">
+          <h2 className="text-4xl font-bold text-stone-600 mb-12 flex items-center italic">
+            Proyectos
+            <span className="ml-4 h-[1px] bg-stone-400 flex-grow"></span>
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {proyectos.map((proyecto) => (
-              <div key={proyecto.id} className="group">
+              <div key={proyecto.id} className="group cursor-pointer">
                 <div className="aspect-video bg-stone-300 rounded-2xl mb-6 overflow-hidden relative shadow-inner">
                   <div className="absolute inset-0 flex items-center justify-center text-stone-400 font-bold uppercase tracking-widest text-xs">
                     {proyecto.nombre} Preview
@@ -58,7 +106,7 @@ function App() {
                 </div>
                 <h3 className="text-2xl font-bold text-stone-700 mb-2">{proyecto.nombre}</h3>
                 <p className="text-stone-500 leading-relaxed mb-4">{proyecto.descripcion}</p>
-                <span className="text-[10px] font-black px-3 py-1 bg-stone-300 rounded-full text-stone-600 uppercase tracking-tighter">
+                <span className="text-[10px] font-black px-3 py-1 bg-stone-300 rounded-full text-stone-600 uppercase">
                   {proyecto.tipo}
                 </span>
               </div>
@@ -66,44 +114,36 @@ function App() {
           </div>
         </section>
 
-        {/* SECCIÓN ACADEMIC BACKGROUND */}
+        {/* 5. SECCIÓN ACADEMIC BACKGROUND */}
         <section id="educacion" className="mb-32">
           <h2 className="text-4xl font-bold text-stone-600 mb-12 flex items-center italic">
-            Academic Background
+            Educación
             <span className="ml-4 h-[1px] bg-stone-400 flex-grow"></span>
           </h2>
           <div className="space-y-12">
             {educacion.map((edu) => (
-              <div key={edu.id} className="max-w-3xl group">
-                <h3 className="text-2xl font-bold text-stone-700 group-hover:text-stone-900 transition-colors">
-                  {edu.grado}
-                </h3>
+              <div key={edu.id} className="max-w-3xl">
+                <h3 className="text-2xl font-bold text-stone-700">{edu.grado}</h3>
                 <p className="text-lg text-stone-500 font-medium mb-3">{edu.institucion}</p>
-                <div className="flex gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-stone-500 bg-stone-300/60 px-3 py-1 rounded">
-                    {edu.estatus}
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-stone-400 border border-stone-300 px-3 py-1 rounded">
-                    {edu.area}
-                  </span>
-                </div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-stone-400 bg-stone-300/50 px-3 py-1 rounded">
+                  {edu.estatus} — {edu.area}
+                </span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* SECCIÓN TECNOLOGÍAS */}
+        {/* 6. SECCIÓN TECNOLOGÍAS */}
         {habilidades && (
           <section id="tecnologias" className="pb-20">
             <h2 className="text-4xl font-bold text-stone-600 mb-12 flex items-center italic">
-              Technologies
+              Tecnologias
               <span className="ml-4 h-[1px] bg-stone-400 flex-grow"></span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
               {Object.entries(habilidades).map(([categoria, lista]: any) => (
                 <div key={categoria}>
                   <h3 className="text-[11px] font-black text-stone-400 mb-6 tracking-[0.3em] uppercase border-b border-stone-300 pb-2">
-                    {/* Aquí separamos CamelCase a palabras con espacios */}
                     {categoria.replace(/([A-Z])/g, ' $1')}
                   </h3>
                   <ul className="space-y-4">
@@ -122,7 +162,7 @@ function App() {
       </main>
 
       <footer className="py-20 border-t border-stone-300 text-center text-stone-400 text-[10px] tracking-[0.3em] uppercase">
-        Jade Portfolio — {new Date().getFullYear()} — Built with NestJS & React
+        Jade — {new Date().getFullYear()} — Built with NestJS & React
       </footer>
     </div>
   );
